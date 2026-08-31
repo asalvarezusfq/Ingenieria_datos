@@ -1,0 +1,68 @@
+CREATE SCHEMA IF NOT EXISTS dw_estadisticas;
+
+CREATE TABLE dw_estadisticas.dim_tiempo (
+    id_tiempo INTEGER PRIMARY KEY,
+    anio INTEGER NOT NULL,
+    mes INTEGER NOT NULL,
+    dia INTEGER NOT NULL,
+    dia_semana INTEGER NOT NULL,
+    fecha DATE NOT NULL
+);
+
+CREATE TABLE dw_estadisticas.dim_equipo (
+    id_equipo INTEGER PRIMARY KEY,
+    nombre_equipo VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE dw_estadisticas.dim_torneo (
+    id_torneo INTEGER PRIMARY KEY,
+    nombre_torneo VARCHAR(150) NOT NULL
+);
+
+CREATE TABLE dw_estadisticas.dim_ubicacion (
+    id_ubicacion INTEGER PRIMARY KEY,
+    ciudad VARCHAR(150) NOT NULL,
+    pais VARCHAR(150) NOT NULL
+);
+
+
+CREATE TABLE dw_estadisticas.fact_partido (
+    id_partido INTEGER PRIMARY KEY,
+    
+    id_tiempo INTEGER NOT NULL,
+    id_equipo_local INTEGER NOT NULL,
+    id_equipo_visitante INTEGER NOT NULL,
+    id_torneo INTEGER NOT NULL,
+    id_ubicacion INTEGER NOT NULL,
+    
+    goles_local INTEGER NOT NULL,
+    goles_visitante INTEGER NOT NULL,
+    goles_penal INTEGER NOT NULL,
+    autogoles INTEGER NOT NULL,
+    neutral BOOLEAN NOT NULL
+);
+
+ALTER TABLE dw_estadisticas.fact_partido
+ADD CONSTRAINT fk_fact_tiempo
+FOREIGN KEY (id_tiempo)
+REFERENCES dw_estadisticas.dim_tiempo(id_tiempo);
+
+ALTER TABLE dw_estadisticas.fact_partido
+ADD CONSTRAINT fk_fact_equipo_local
+FOREIGN KEY (id_equipo_local)
+REFERENCES dw_estadisticas.dim_equipo(id_equipo);
+
+ALTER TABLE dw_estadisticas.fact_partido
+ADD CONSTRAINT fk_fact_equipo_visitante
+FOREIGN KEY (id_equipo_visitante)
+REFERENCES dw_estadisticas.dim_equipo(id_equipo);
+
+ALTER TABLE dw_estadisticas.fact_partido
+ADD CONSTRAINT fk_fact_torneo
+FOREIGN KEY (id_torneo)
+REFERENCES dw_estadisticas.dim_torneo(id_torneo);
+
+ALTER TABLE dw_estadisticas.fact_partido
+ADD CONSTRAINT fk_fact_ubicacion
+FOREIGN KEY (id_ubicacion)
+REFERENCES dw_estadisticas.dim_ubicacion(id_ubicacion);

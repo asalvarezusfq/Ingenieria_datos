@@ -1,0 +1,22 @@
+
+CREATE SCHEMA IF NOT EXISTS "DBtaller1";
+CREATE TABLE IF NOT EXISTS "DBtaller1".results (
+    date DATE,
+    home_team VARCHAR(100),
+    away_team VARCHAR(100),
+    home_score INTEGER,
+    away_score INTEGER,
+    tournament VARCHAR(150),
+    city VARCHAR(100),
+    country VARCHAR(100),
+    neutral BOOLEAN
+);
+
+COPY "DBtaller1".results
+FROM '/csv/results.csv'
+WITH (
+    FORMAT CSV,
+    HEADER TRUE,
+    DELIMITER ',',
+    NULL 'NA'
+);

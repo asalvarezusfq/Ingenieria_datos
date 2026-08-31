@@ -1,0 +1,21 @@
+
+POSTG
+----------------
+docker run --name postgresql \
+  -e POSTGRES_USER=miuser \
+  -e POSTGRES_PASSWORD=miclave \
+  -e POSTGRES_DB=midb \
+  -p 5432:5432 \
+  -v ~/Downloads/archive:/csv \
+  -d postgres
+
+
+MYSQL
+----------------
+docker run --name mysql \
+  -d \
+  -p 3306:3306 \
+  -e MYSQL_ROOT_PASSWORD=miclave \
+  -v ~/Downloads/archive:/var/lib/mysql-files \
+  --restart unless-stopped \
+  mysql:8

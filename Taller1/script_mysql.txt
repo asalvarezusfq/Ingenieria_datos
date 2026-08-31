@@ -1,0 +1,37 @@
+CREATE DATABASE DBsemana1
+    DEFAULT CHARACTER SET = 'utf8mb4';
+
+USE DBsemana1;
+
+CREATE TABLE goalscorers (
+    date DATE,
+    home_team VARCHAR(100),
+    away_team VARCHAR(100),
+    team VARCHAR(100),
+    scorer VARCHAR(150),
+    minute INT,
+    own_goal BOOLEAN,
+    penalty BOOLEAN
+);
+
+LOAD DATA INFILE '/var/lib/mysql-files/goalscorers.csv'
+INTO TABLE goalscorers
+FIELDS TERMINATED BY ','
+OPTIONALLY ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS
+(date, home_team, away_team, team, scorer, @minute, @own_goal, @penalty)
+SET
+    minute = NULLIF(@minute, 'NA'),
+    own_goal = CASE
+        WHEN @own_goal = 'True' THEN 1
+        WHEN @own_goal = 'False' THEN 0
+        ELSE NULL
+    END,
+    penalty = CASE
+        WHEN @penalty = 'True' THEN 1
+        WHEN @penalty = 'False' THEN 0
+        ELSE NULL
+    END;
+
+    
