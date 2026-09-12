@@ -1,0 +1,46 @@
+{
+  "index_patterns": ["transporte-*"],
+  "template": {
+    "settings": {
+      "number_of_replicas": 0
+    },
+    "mappings": {
+      "properties": {
+        "@timestamp":            { "type": "date" },
+        "tipo_evento":           { "type": "keyword" },
+        "estado":                { "type": "keyword" },
+        "ubicacion":             { "type": "geo_point" },
+
+        "id_bus":                { "type": "integer" },
+        "id_ruta":               { "type": "integer" },
+        "id_viaje":              { "type": "integer" },
+
+        "placa":                 { "type": "keyword" },
+        "modelo":                { "type": "keyword" },
+        "capacidad":             { "type": "integer" },
+        "nombre_ruta":           { "type": "keyword" },
+        "origen":                { "type": "keyword" },
+        "destino":               { "type": "keyword" },
+        "conductor":             { "type": "keyword" },
+
+        "fecha":                 { "type": "date" },
+        "cantidad_pasajeros":    { "type": "integer" },
+        "tiempo_estimado_min":   { "type": "integer" },
+        "tiempo_real_min":       { "type": "integer" },
+        "minutos_retraso":       { "type": "integer" },
+        "retraso_significativo": { "type": "boolean" },
+
+        "ciudad":                { "type": "keyword" },
+        "condicion":             { "type": "keyword" },
+        "temperatura_c":         { "type": "float" },
+        "humedad_pct":           { "type": "integer" },
+        "precipitacion_mm":      { "type": "float" },
+        "velocidad_viento_kmh":  { "type": "float" },
+
+        "velocidad":             { "type": "float" },
+        "latitud":               { "type": "float" },
+        "longitud":              { "type": "float" }
+      }
+    }
+  }
+}
